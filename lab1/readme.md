@@ -74,7 +74,7 @@ to the exercises in the portfolio.
 1 - Pull source code from remote repository
 -------------------------------------------
 
-You are probably reading this readme at [https://github.com/ELEC40004/elec40004-2019-q3-lab/lab1].
+You are probably reading this readme at [https://github.com/ELEC40004/elec40004-2019-q3-lab/tree/master/lab1].
 
 *Task*: Get a local copy of this repository by performing the command:
 ```
