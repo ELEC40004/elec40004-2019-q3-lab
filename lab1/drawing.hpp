@@ -102,7 +102,21 @@ void Drawing_write_svg(Drawing *d)
 
     float off_x=d->min_x;
     float off_y=d->min_y;
-    cout<<"<svg height='"<<d->max_x-d->min_x<<"' width='"<<d->max_y-d->min_y<<"'"<<endl;
+    float width=d->max_x-d->min_x;
+    float height=d->max_y-d->min_y;
+
+    while(min(width,height) < 256){
+        width=width*1.5;
+        height=height*1.5;
+    } 
+
+    while(max(width,height) > 1024){
+        width=width/1.5;
+        height=height/1.5;
+    } 
+
+    cout<<"<?xml version='1.0' encoding='UTF-8'?>"<<endl;
+    cout<<"<svg xmlns='http://www.w3.org/2000/svg' height='"<<height<<"' width='"<<width<<"'"<<endl;
     cout<<"  viewBox='"<<d->min_x<<" "<<d->min_y<<" "<<d->max_x-d->min_x<<" "<<d->max_y-d->min_y<<"' >" << endl;
     for(unsigned i=0; i<d->shapes.size(); i++){
         cout<<"  <polygon style='fill:"<<d->shapes[i].colour<<"' points='";
