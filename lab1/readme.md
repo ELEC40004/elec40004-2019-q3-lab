@@ -151,10 +151,10 @@ Your's will depend on your login.
     source control, and create a commit containing the string "wk1T3PreReFactor".
 
 Recall that we can add files to a repo using `git add [filenames]`, and can
-commit with the command `git commit -a -m 'MY COMMIT MESSAGE'.
+commit with the command `git commit -a -m 'MY COMMIT MESSAGE'`.
 
 You can use a longer commit message if you want as long as it contains the
-string `t3PreReFactor`. If there are more than one commit contining the
+string `wk1T3PreReFactor`. If there are more than one commit contining the
 string, the most recent one is chosen.
 
 4 - Convert the Drawing object into a class
@@ -235,13 +235,13 @@ programs, and are back in a position where `test_drawing.sh` returns a success
 code.
 
 *Task*: commit the updated files with the message `wk1T7PlainClass`, and **push** the
-repository to your private remote repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}`.
+repository to your private remote repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}`.
 
 Here the string `${LOGIN}` should be replaced with your _Imperial_ login.
 
 The site you pulled the initial version of this repository from is a shared
 "master", and you do not have push access rights to it. However, the repository
-at `https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}` is your own private repository, and has some extra properties:
+at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}` is your own private repository, and has some extra properties:
 
 - Only you and instructors can view (read from) the repository.
 
@@ -253,11 +253,11 @@ you can push and pull your repository to. You can list the current remotes using
 $ git remote -v
 ```
 You should see a remotes listed for `origin` that point back to the
-master repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab1.git`.
+master repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab.git`.
 
-Add a new remote called `private` which points at your private repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}.git`:
+Add a new remote called `private` which points at your private repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}.git`:
 ```
-$ git remote add private https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}.git
+$ git remote add private https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}.git
 ```
 Remember that you need to replace `${LOGIN}` with your Imperial login id.
 If you list remotes again, there should now be a new remote called `private`:
@@ -279,7 +279,7 @@ These should be the credentials for your github account, not your Imperial crede
 You may be asked for your credentials every time you push and pull from your private
 remote, though some operating systems (such as macOS) may cache it for future attempts.
 
-If the push succeeds, you can browse to `https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}`, and should see your modified repository is now visible there, including your two commits.
+If the push succeeds, you can browse to `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}`, and should see your modified repository is now visible there, including your two commits.
 
 8 - Apply access modifiers to protect member variables
 ------------------------------------------------------
