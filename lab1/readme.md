@@ -62,6 +62,12 @@ are related to are:
 Standard Tasks
 ==============
 
+To do two of these steps you'll need to have created a github account and registered it via
+[this form](https://forms.office.com/Pages/ResponsePage.aspx?id=B3WJK4zudUWDC0-CZ8PTB07FeicCPhVAsezU-PfpjRxUMEdHVDc0Q0s0SU5URTBONUtZOU5JWkdRWi4u). Eventually
+this information will be used to create the private repository that is mentioned here.
+Note that you can do almost all the steps except the final *push*, so if you haven't got
+a private repository yet then it doesn't need to stop you getting started during lab.
+
 These are the tasks that everyone is expected to be able to do, and directly link
 to the exercises in the portfolio.
 
@@ -266,7 +272,7 @@ private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (push)
 Now the remote is set up, you should be able to *push* to that remote, which will
 mirror your local repository to your private remote:
 ```
-$ git push private
+$ git push --set-upstream private master
 ```
 You are likely to be asked for your credentials (username and password) when doing this.
 These should be the credentials for your github account, not your Imperial credentials.
@@ -298,8 +304,8 @@ but `spiral.cpp` will no longer compile. This is completely the fault of the
 writer of `spiral.cpp`, as they have no right to reach in and tinker with the
 state of the object - they're not even doing it right!
 
-9 - Fix the program (2 mins)
-----------------------------
+9 - Fix the program
+-------------------
 
 *Task*: Fix `spiral.cpp`.
 
