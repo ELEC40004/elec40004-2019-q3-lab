@@ -77,14 +77,24 @@ $ git clone https://github.com/ELEC40004/elec40004-2019-q3-lab.git
 You should now have a complete copy of the repository on your local machine
 in the directory `elec40004-2019-q3-lab`. Note that this is not just a snapshot of the files,
 it also contains the history of changes to the files. If you move into
-the directory and use `git status`, you'll see the history of commits to
+the directory and use `git log`, you'll see the history of commits to
 the repository:
 ```
 $ cd elec40004-2019-q3-lab
-$ git status
-TODO
-```
+$ git log
+commit 1ebb2007e09d4860c8caaf2e4f4402d014efe813 (HEAD -> master)
+Author: David Thomas <dt10@imperial.ac.uk>
+Date:   Tue Jan 14 12:56:16 2020 +0000
 
+    Adding xmlns for SVG.
+
+commit 5828d1b826b3ad26a38d80bfe16f828b5c52b1c0
+Author: David Thomas <dt10@imperial.ac.uk>
+Date:   Tue Dec 24 12:07:38 2019 +0000
+
+    Initial import from dev repo.
+```
+(You'll probably see more commits than this).
 
 
 2 - Create test infrastructure
@@ -236,8 +246,8 @@ you can push and pull your repository to. You can list the current remotes using
 ```
 $ git remote -v
 ```
-You should see a single line called `origin` that points back to the
-master repository at TODO.
+You should see a remotes listed for `origin` that point back to the
+master repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab1.git`.
 
 Add a new remote called `private` which points at your private repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab1-${LOGIN}.git`:
 ```
@@ -246,7 +256,11 @@ $ git remote add private https://github.com/ELEC40004/elec40004-2019-q3-lab1-${L
 Remember that you need to replace `${LOGIN}` with your Imperial login id.
 If you list remotes again, there should now be a new remote called `private`:
 ```
-TODO
+$ git remote -v
+origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (fetch)
+origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (push)
+private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (fetch)
+private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (push)
 ```
 
 Now the remote is set up, you should be able to *push* to that remote, which will
@@ -325,6 +339,77 @@ $ ./test_drawing.sh
 ```
 
 Extra Tasks
------------
+===========
 
-If you're interested in 
+If you're interested in extra improvments, then some possible extensions are:
+
+Compositional
+-------------
+
+It is common to want to re-use a drawing in another drawing. Add a method:
+```
+void Drawing::add_drawing(const Drawing &src, float x, float y);
+```
+which embeds the contents of the polygons contained in `src`, but translated by `x` and `y`.
+
+To test this you could attempt to draw the house multiple times within a larger drawing,
+or modify the spiral code to draw a house instead of a circle at each point.
+
+Animation
+---------
+
+The `spiral` program has a number of command-line parameters which can be varied in order to
+get different effects. If these parameters are slowly varied, then the spiral will change
+shape and colour.
+
+At the moment the spiral program generates one svg file for each set of parameters,
+but if you can find a way to call the program hundreds of times with slightly
+changing parameters, you can generate hundreds of SVG frames. From an SVG
+file you can generate a `png` bitmap file using convert.
+
+So for example, if you can somehow generate a script looking like:
+```
+#!/bin/bash
+
+./spiral 64.0 > out00001.svg
+convert out00001.svg out00001.png 
+
+./spiral 65.0 > out00002.svg
+convert out00002.svg out00002.png 
+
+./spiral 66.0 > out00003.svg
+convert out00003.svg out00003.png 
+
+...
+```
+and so, you would end up with large numbers of slightly varying bitmaps.
+It would take a long time to run, but you can go and do something else.
+
+Hrmm, what could be used to print lots of lines of text with slightly changing
+numbers?
+
+The `ffmpeg` command then knows how to turn those into a movie `out.mp4`:
+```
+$ ffmpeg -r 25 -i out%06d.png -c:v libx264 -crf 10  -pix_fmt yuv420p out.mp4
+```
+
+This is mainly for fun, but it is the start of being able to do large
+scale exploration of big problem spaces, including using parallel machines.
+
+
+Genuine circles
+--------------
+
+The SVG specification actually supports [real circles](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle), but in this code we're generating polygonal approximations to circles. Using
+genuine circles would both result in better figures, and also smaller file sizes.
+
+You'll need to think about how to represent circles, as currently there is only the polygon
+struct for representing shapes. This is actually quite a difficult problem without using
+inheritance, though it is possible. Some possibilities are:
+
+- Creating a `Circle` struct, and having a vector of Polygons and a separate vector of Circles. 
+- Add a flag to the `Polygon` struct, indicating whether the data should be treated as a polygon
+  or a circle. Even better: rename it to `Shape`.
+
+The act of trying to solve the problem will actually set you up quite well for the
+solution that inheritance provides later on.
