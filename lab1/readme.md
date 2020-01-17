@@ -323,7 +323,7 @@ been completely re-factored to use classes, while preserving the same
 functionality.
 
 *Task*: Create a final commit called `wk1T10RefactorComplete` and push the
-repository to your final remote.
+repository to your private remote.
 
 Final checks
 ------------
@@ -347,7 +347,7 @@ $ ./test_drawing.sh
 Extra Tasks
 ===========
 
-If you're interested in extra improvments, then some possible extensions are:
+If you're interested in extra improvements, then some possible extensions are:
 
 Compositional
 -------------
