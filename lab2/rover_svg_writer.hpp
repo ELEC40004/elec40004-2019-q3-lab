@@ -25,27 +25,27 @@ Rover::~Rover()
     cout<<"</svg>"<<endl;
 }
 
-float Rover::get_time() const
+float Rover::get_time()
 {
     return m_time;
 }
 
-vector2d Rover::get_position() const
+vector2d Rover::get_position()
 {
     return m_position;
 }
 
-float Rover::get_speed() const
+float Rover::get_speed()
 {
     return m_speed;
 }
 
-float Rover::get_angle() const
+float Rover::get_angle()
 {
     return m_angle;
 }
 
-bool Rover::get_pen_down() const
+bool Rover::get_pen_down()
 {
     return m_pen_down;
 }

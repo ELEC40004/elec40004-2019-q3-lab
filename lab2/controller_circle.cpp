@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-//#include "rover_svg_writer.hpp"
+#include "rover_svg_writer.hpp"
 
 int main(int argc, const char **argv)
 {

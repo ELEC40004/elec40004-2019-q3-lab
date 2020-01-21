@@ -8,7 +8,7 @@ Context
 -------
 
 This lab uses the idea of objects to represent real-world things: in the
-previous labs we looked at static models of the world; this time we'll
+previous labs we looked at static models of the images; this time we'll
 look at objects which evolve over time. We're also looking at how objects
 could be used to control things in the real-world, as well as simulating
 virtual versions of them.
@@ -28,7 +28,7 @@ programming language, which allowed the user to control a "turtle" much
 like the rover. The turtle could either by a virtual turtle on-screen,
 or if you were lucky enough your school might have a
 [physical turtle](https://en.wikipedia.org/wiki/Turtle_(robot)#/media/File:Turtle_draw.jpg)
-which drew pictures on the foor.
+which drew pictures on the floor (this was a big thing in the late 80s).
 
 We are not going to explicitly connect this object model to your
 physical rovers, but conceptually the gap between these abstract
@@ -37,18 +37,18 @@ APIs and the concrete Arduino code is small.
 The main header files are:
 
 - `rover.hpp` : Contains the declaration of the `Rover` class. Clients can use this to find
-    out the current angle, speed and so on, and to modify the angle and speed, and also to
+    out the current angle, speed and so on, and also to then modify the angle and speed, and to
     move the rover forwards by a certain time step.
 
 - `rover_svg_writer.hpp` : Contains an implementation of the `Rover` class that generates an SVG
-    which captures where the rover moved with it's pen down throughout time.
+    capturing where the rover moved with it's pen down throughout the entire control period.
 
 - `rover_action_writer.hpp` : Contains an implementation of the `Rover` class that captures
     the actions performed on the rover as a stream of action objects that are written to
-    a file.
+    `stdout`.
 
-A problem with the current approach us that we can only include one of those files
-into a program.
+A problem with this current approach is that we can only include one of those files
+into a program, which we'll try to fix.
 
 We also have three source files which are able to control a rover:
 
@@ -58,27 +58,16 @@ We also have three source files which are able to control a rover:
 
 - `controller_brownian.cpp` : Makes the rover follow a brownian motion path.
 
-
-
 Aims
 ----
 
-The main aims of this class are to:
+The main aims of this lab are to:
 - use practical function and operator overloading;
 - use the `const` keyword for parameters and methods;
 - allow objects to save and load themselves to files;
 - seperate compilation into different source files.
 
-The steps we'll use (mirrored in the portfolio) are:
-
-1.  Merge changes into a repository.
-
-2.  Implement overloads for `<<` and `>>` to allow an object to read and write itself.
-
-3.  Add test infrastructure that tests that reading and writing objects to files works.
-
-4.  Add const correctness to member functions.
-
+The steps in the lab are mirrored by simpler versions of the same steps in the portfolio.
 
 Standard Tasks
 ==============
@@ -105,10 +94,10 @@ github, either by:
 - Using `git pull YOUR_REMOTE_NAME` to ensure that your existing local repository is up to date.
 
 You are probably reading this on `https://github.com/ELEC40004/elec40004-2019-q3-lab/tree/master/lab2`, which is contained on github. If you're reading this document somewhere else,
-then temporarily open a browser and go that link. You should see the main view onto the
+then temporarily open a browser and go to that link. You should see the main view onto the
 repo, with lots of options and links. Looking down from the top of the page, you'll
 see a row of links containing "commits", "branches", "packages", "releases", "contributors",
-with a number in front of each one. Click the "commits" link.
+with a number in front of each one. _Click the "commits" link_.
 
 You'll see a list of rows containing different commits (changes) made to the
 repository, from newest to oldest. Each row contains the commit message, information
@@ -122,7 +111,8 @@ The shorter hash is only unique within the repo, and is more of a short-hand for
 humans. The github commit view shows the same information as is returned from `git log`
 on the command line, but with fancier formatting.
 
-If you navigate to your own lab repo at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}` (remember to replace ${LOGIN} with your own Imperial login) you'll also be
+If you navigate to your own lab repo at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}`
+(remember to replace ${LOGIN} with your own Imperial login) you'll also be
 able to look at the commits. Up to a certain point these commits will be exactly the
 same in both the master and in your repo, but the commits that introduce
 lab2 will create a "fork": commits exist in the master repo that aren't in yours, and
@@ -157,21 +147,24 @@ $ git pull ${MASTER_REPO}
 ```
 For example if the output of `git remote -v` was:
 ```
-TODO
+origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (fetch)
+origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (push)
+private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (fetch)
+private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (push)
 ```
 your would use:
 ```
-$ git pull master
+$ git pull origin
 ```
-to merge.
+to merge changes from the `origin` remote.
 
 You _should_ now find that if you do `git log` then you find that your
 local repository contains all of your changes, plus all of the changes
 from the master repo.
 
-To double-check, it is worth using `git push` to push your changes back
-up to github, then look at in the github web-site. You should now see
-the commits from master intermixed with your own commits. It's also
+To double-check, it is worth using `git push private` (or equivalent)
+to push your changes back up to github, then look at in the github web-site.
+You should now see the commits from master intermixed with your own commits. It's also
 possible to see the fork and merge graphically; look for the row of
 tabs "Code", "Issues", "Pull requests", and click on the tab "Insights".
 On the left-hand side there is a tab called "Network", which will
@@ -192,7 +185,7 @@ valid, as every combination of `x` and `y` is possible. As a consequence,
 we don't mind if users modify the members directly.
 
 There are examples of operator overloading already which allow the user to
-add, subtract, and multiple vectors with a constant. We also have declarations
+add, subtract, and multiply vectors with a constant. We also have declarations
 for `<<` and `>>`, but they do not have definitions.
 
 **Task**: Add definitions to the declarations of `<<` and `>>` for the
@@ -217,8 +210,8 @@ You can use these inline, like so:
 int main()
 {
     cout << 255 << endl;        // Prints "255"
-    cout << hex << 255 << endl; // Prints "FF"
-    cout << scientific << 1625 << endl; // Prints "1.625e3"
+    cout << hex << 255 << endl; // Prints "ff"
+    cout << scientific << 1625.0 << endl; // Prints "1.625000e+03"
 }
 ```
 
@@ -239,7 +232,7 @@ in one function could change the behaviour of other functions, even though
 the types of those functions suggest it is impossible for them to affect each other.
 
 A "hygenic" print implementation would try to restrict it's globally visible
-changes, so that the state of cout is the same after the function as before.
+changes, so that the state of `cout` is the same after the function as before.
 For example, a function that needs to print in hex might try to fix it by doing:
 ```
 void print_hex(int x)
@@ -254,7 +247,7 @@ int main()
 {
     for(int i=0; i<256; i++){
         cout << dec << " i = " << i ;
-        cout << oct << " =0 ;
+        cout << oct << " = 0" << i ;
         print_hex(i);
         cout << endl;
     }
@@ -318,7 +311,7 @@ An alternative approach is to have a single program which reads vectors from
 the output file matches the expected output using something like `diff` - however
 the whitespace in the output might not match the input. A reasonable choice
 would be to manually create a new reference output text file from `test_vector2d_io_in.txt`,
-where you delete all whitespace and put each on a different line.
+where you delete all whitespace and put each value on a different line.
 
 4 - Fix const-correctness
 -------------------------
@@ -341,9 +334,9 @@ Once this is done, you should be able to compile each of the controllers.
 ---------------------------
 
 **Task**: Create a script called `compile_and_run_controllers_to_svg_writer.sh`, which
-compiles each of the controller source files into an
-executable with the suffix "_to_svg_writer", and captures the output
-of the program in a file with an `.svg` extensions.
+compiles each of the controller source files `X.cpp` into an
+executable with the suffix "X_to_svg_writer", and then runs and captures the output
+of the program in a file called `X.svg` extensions.
 
 The three controllers are:
 
@@ -379,9 +372,9 @@ to multiple definitions of the same function.
 ---------------------------
 
 *Task**: Create a script called `compile_and_run_controllers_to_action_writer.sh`, which
-compiles each of the controller source files into an
-executable with the suffix "_to_action_writer", and captures the output
-of the program in a file with an `.action` extension.
+compiles each of the controller source files `X.cpp` into an
+executable with the suffix "X_to_action_writer", and captures the output
+of the program into a file called `X.actions`.
 
 For example, the outputs for `controller_circle.cpp` should be a program
 `controller_circle_to_action_writer` and an SVG file called `controller_circle.actions`.
@@ -396,11 +389,11 @@ in the commit message.
 ------------------------------------------
 
 We are now in the unhappy situation where we can either choose the
-svg writer, or the action writer - to change which method is used
+svg writer or the action writer, but not both - to change which method is used
 we have to modify the source file and re-compile. Ideally we'd like
 to support multiple types of controller from the same client source code,
-ideally without needing to compile. We can achieve the first object now,
-and then the second objective with inheritance.
+ideally without needing to compile. We can achieve the first objective now,
+and then the second objective with the use of basic inheritance next week.
 
 At the moment the files `rover_log_writer.hpp` and `rover_action_writer.hpp` are
 header files, which means they need to be `#include`'d. However, they are
@@ -409,18 +402,18 @@ a main function.
 
 **Task**: Rename the two rover implementation headers from .hpp to .cpp.
 
-If you try compiling them now they are source files, you should find
+If you try compiling them now they have source file extensions, you should find
 the compiler has no problems with them. The only thing stopping it
 from creating a program is the lack of a `main` function, which it
-flag as an error.
+flags as an error right at the end.
 
-9 - Compile controllers against writers
----------------------------------------
+9 - Compile controllers source against writer source
+-----------------------------------------------------
 
 The problem we faced was that we had to modify the controller source to
 select a specific rover implementation via `#include`, as the controller
-needs the definitions of the `Rover` method. However, we could not include
-any definitions into the controller source file, and actually compile them
+needs the definitions of the `Rover` method. However, we could decide to not include
+any definitions into the controller source file, and instead compile them
 in from another source file.
 
 **Task**: Completely remove the `#include "rover_action_writer.hpp"` line from
@@ -430,8 +423,8 @@ If you try compiling the controllers, you should see a lot of linker errors
 complaining that it can't find definitions for all the `Rover` methods. So
 now we have two sets of source files:
 
-- controller source files: can't compile due to missing `Rover` methods.
-- rover implementation files: can't compile due to missing `main`.
+- _controller source files_: can't compile due to missing `Rover` methods.
+- _rover implementation files_: can't compile due to missing `main`.
 
 Each file has what the other file needs, and the compiler is capable of
 "linking" together two source files so that it can combine definitions from
@@ -441,7 +434,7 @@ For example:
 ```
 $ g++ controller_circle.cpp rover_svg_writer.cpp -o controller_circle_to_svg_writer
 ```
-If you try this, you'll find they compile, by now you get multiple linker errors
+If you try this, you'll find they compile, but now you get multiple linker errors
 due to `vector2d`:
 ```
 /tmp/cckM7cQ6.o: In function `operator+(vector2d const&, vector2d const&)':
@@ -458,7 +451,7 @@ up, by extracting the functions definitions from `vector2d.hpp`, and putting
 them in a source file called `vector2d.cpp`.
 
 **Task**: split the file `vector2d.hpp` up, by adding a source file `vector2d.cpp` which
-contains the overload definitions.
+contains the operator overload definitions.
 
 We should now be able to compile the program by specifying all three
 source files:
@@ -475,11 +468,11 @@ $ g++ controller_circle.cpp rover_action_writer.cpp vector2d.cpp -o controller_c
 10 - Update the two build scripts
 ---------------------------------
 
-We now have the ability to link different controllers implementations
+We now have the ability to link different controller implementations
 against different Rover implementations, _without_ changing the source
 code. All we need to do is to select between different sets of source
 files which allows us to bring in different sets of definitions, and
-produce programs that combine different properties.
+produce programs that combine different implementations.
 
 **Task**: update `compile_and_run_controllers_to_action_writer.sh` and
 `compile_and_run_controllers_to_svg_writer.sh` so that they select
@@ -502,7 +495,7 @@ Rendering the path of the Rover over time
 
 The program `render_rover_actions_as_rgb32_sequence.cpp` is a simple
 program that reads an action stream from input, and then writes a
-stream of video frames describing showing the path of the rover over
+stream of video frames showing the path of the rover over
 time. The output of the video is raw binary data, with four bytes
 per pixel to describe red, green, and blue, so the file is massive.
 
