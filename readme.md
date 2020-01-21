@@ -7,3 +7,4 @@ To get a local copy of this lab, follow the `clone`
 instructions in Lab1.
 
 - [Lab1](lab1) : Plain objects
+- [Lab2](lab2) : Overloading and seperate compilation
