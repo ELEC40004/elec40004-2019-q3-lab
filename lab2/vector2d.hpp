@@ -54,6 +54,6 @@ ostream &operator<<(ostream &dst, const vector2d &a);
 // it is in the correct format. Note that whitespace _may_ appear before the
 // the opening '(' character, but not whitespace will appear between the
 // '(' and ')'
-ostream &operator>>(ostream &src, vector2d &a);
+istream &operator>>(istream &src, vector2d &a);
 
 #endif
