@@ -152,7 +152,7 @@ origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (push)
 private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (fetch)
 private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (push)
 ```
-your would use:
+you would use:
 ```
 $ git pull origin
 ```
@@ -217,6 +217,9 @@ int main()
 
 In our specific case we need two manipulators to print the numbers
 correctly: `fixed`, and `setprecision(3)`.
+
+(For this lab, don't worry about trying to restore the initial format and precision,
+though see the following commentary.)
 
 ### Commentary on global state
 
