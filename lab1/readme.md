@@ -86,7 +86,7 @@ it also contains the history of changes to the files. If you move into
 the directory and use `git log`, you'll see the history of commits to
 the repository:
 ```
-$ cd elec40004-2019-q3-lab
+$ cd elec40004-2019-q3-lab/lab1
 $ git log
 commit 1ebb2007e09d4860c8caaf2e4f4402d014efe813 (HEAD -> master)
 Author: David Thomas <dt10@imperial.ac.uk>
@@ -163,10 +163,11 @@ string, the most recent one is chosen.
 *Task*: modify `drawing.hpp` so that `Drawing` is converted into a structure with member functions.
 
 The main steps involved are:
-1 - Moving the `Drawing_*` functions inside the `Drawing` structure.
-2 - Removing the redundant `Drawing_` prefix from the functions.
-3 - Converting the `Drawing_create` function into a constructor with no parameters.
-4 - Converting the methods so that the object is either explicitly or implicitly accessed
+
+1.  Moving the `Drawing_*` functions inside the `Drawing` structure.
+2.  Removing the redundant `Drawing_` prefix from the functions.
+3.  Converting the `Drawing_create` function into a constructor with no parameters.
+4.  Converting the methods so that the object is either explicitly or implicitly accessed
     via `this`, rather than explicitly via the `d` parameter.
 
 While you can't compile the programs yet, you can attempt to compile the
@@ -179,7 +180,7 @@ This will let you know if you have any basic syntactic problems from the convers
 5 - Converting uses of the type via a pointer
 ---------------------------------------------------------
 
-The program `house.cpp` uses the `Drawing` type "properly", as it relies on
+The program `house.cpp` uses the `Drawing` type "properly", as it relies only on
 the functions in the API.
 
 *Task*: modify `house.cpp` so that it compiles and executes against the modified
@@ -191,7 +192,7 @@ The main changes required are:
     Drawing *d=Drawing_create();
     ```
     becomes
-    ```
+    ```c++
     Drawing *d=new Drawing;
     ```
 
@@ -199,7 +200,7 @@ The main changes required are:
     Drawing_destroy(d);
     ```
     becomes
-    ```
+    ```c++
     delete d;
     ```
     as we are relying on the destructor to release the object when it is deallocated.
@@ -224,8 +225,8 @@ soon as possible.
 
 *Task*: modify `spiral.cpp` so that it compiles and executes against the modified
 class-based `drawing.hpp` header. You should keep the stack-allocated
-`Drawing d` and the direct access and manipulation of member variables, as it makes
-step 9 make sense. 
+`Drawing d` and the direct access and manipulation of member variables, as we need to
+retain it so that step 9 make sense. 
 
 7 - Commit and push changes
 ---------------------------
@@ -251,8 +252,10 @@ Your local repository will currently be set up with one **remote**, which is a p
 you can push and pull your repository to. You can list the current remotes using:
 ```
 $ git remote -v
+origin  https://github.com/ELEC40004/elec40004-2019-q3-lab.git (fetch)
+origin  https://github.com/ELEC40004/elec40004-2019-q3-lab.git (push)
 ```
-You should see a remotes listed for `origin` that point back to the
+The two "remotes" listed for `origin` point back to the
 master repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab.git`.
 
 Add a new remote called `private` which points at your private repository at `https://github.com/ELEC40004/elec40004-2019-q3-lab-${LOGIN}.git`:
@@ -263,8 +266,8 @@ Remember that you need to replace `${LOGIN}` with your Imperial login id.
 If you list remotes again, there should now be a new remote called `private`:
 ```
 $ git remote -v
-origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (fetch)
-origin  git@github.com:ELEC40004/elec40004-2019-q3-lab.git (push)
+origin  https://github.com/ELEC40004/elec40004-2019-q3-lab.git (fetch)
+origin  https://github.com/ELEC40004/elec40004-2019-q3-lab.git (push)
 private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (fetch)
 private https://github.com/ELEC40004/elec40004-2019-q3-lab-dt10.git (push)
 ```
@@ -371,7 +374,7 @@ shape and colour.
 At the moment the spiral program generates one svg file for each set of parameters,
 but if you can find a way to call the program hundreds of times with slightly
 changing parameters, you can generate hundreds of SVG frames. From an SVG
-file you can generate a `png` bitmap file using convert.
+file you can generate a `png` bitmap file using `convert` from Imagemagick.
 
 So for example, if you can somehow generate a script looking like:
 ```
@@ -388,13 +391,14 @@ convert out00003.svg out00003.png
 
 ...
 ```
-and so, you would end up with large numbers of slightly varying bitmaps.
-It would take a long time to run, but you can go and do something else.
+and so on, you would end up with large numbers of slightly varying bitmaps.
+It would take a long time to run (well minutes for a few hundred frames),
+but you can go and do something else while it happens.
 
 Hrmm, what could be used to print lots of lines of text with slightly changing
 numbers?
 
-The `ffmpeg` command then knows how to turn those into a movie `out.mp4`:
+The `ffmpeg` command then knows how to turn those png images into a movie `out.mp4`:
 ```
 $ ffmpeg -r 25 -i out%06d.png -c:v libx264 -crf 10  -pix_fmt yuv420p out.mp4
 ```
