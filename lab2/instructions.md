@@ -514,7 +514,8 @@ The steps are:
 3.  Generate an action file from one of the controllers.
 
 4.  Pipe the action file through `render_rover_actions_as_rgb32_sequence` and
-    capture the output as `output.rgb32`. Warning, the file might be quite big.
+    capture the output as `output.rgb32`. Warning, the file might be quite big - it's
+    about 1GB for the "spiral" controller.
 
 5.  Pipe the rgb32 file into the command
     `./convert_rgb32_512x512_stdin_to_mp4_file.sh FILE.mp4`, where `FILE.mp4`
