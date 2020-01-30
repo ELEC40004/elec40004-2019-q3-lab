@@ -144,9 +144,10 @@ though it now lacks a definition for its methods.
 1. Removing the default constructor. This is no longer needed, as the
   concrete inheritors will provide any constructor functionality.
 
-2. Marking the destructor as `virtual` and giving it an empty body.
+2. Marking the destructor as `virtual` and give it an empty body.
 
 3. Marking the other methods as pure virtual by:
+
     a. Prefixing the method declarations with `virtual`; and
     b. Adding the `=0` suffix at the end of the declarations.
 
