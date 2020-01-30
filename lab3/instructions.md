@@ -426,6 +426,9 @@ which will:
 - compare the output against reference outputs included in the repository
 
 
+**Task**: finally, add any new files, commit with a message `s10RoverDynamic`, and push
+to your private repo in github.
+
 Extensions
 ==========
 
