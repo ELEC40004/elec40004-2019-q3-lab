@@ -116,13 +116,16 @@ To do this you should:
 
 1. Copy the `Rover.hpp` file to create the two new header files (leaving `Rover.hpp`
   unmodified)
-2. Change the `Rover` class name in the two new headers to match the new class names
+2. Change the `#ifndef rover_hpp` at the top of each new header to use something other
+   than `rover_hpp`.
+3. Change the `Rover` class name in the two new headers to match the new class names
   (`RoverActionWriter` and `RoverSVGWriter`).
-3. Change the `#include "Rover.hpp"` in the source files `rover_action_writer.cpp` and
+4. Change the `#include "Rover.hpp"` in the source files `rover_action_writer.cpp` and
    `rover_svg_writer.cpp` to include the specific header file associated with the source
    file.
-4. Change the uses of `Rover` in `rover_action_writer.cpp` and `rover_svg_writer.cpp`
+5. Change the uses of `Rover` in `rover_action_writer.cpp` and `rover_svg_writer.cpp`
    to match the new class names.
+
 
 Once this is complete, you should be able to _almost_ compile either `rover_action_writer.cpp`
 or `rover_action_reader.cpp` by themselves, but it will fail to link into a
