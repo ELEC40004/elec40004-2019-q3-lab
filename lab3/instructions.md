@@ -128,7 +128,7 @@ To do this you should:
 
 
 Once this is complete, you should be able to _almost_ compile either `rover_action_writer.cpp`
-or `rover_action_reader.cpp` by themselves, but it will fail to link into a
+or `rover_svg_writer.cpp` by themselves, but it will fail to link into a
 full program due to the lack of a `main` function. You should also be able to 
 _almost_ compile the controllers as before, but they will also fail to link
 due to the lack of an implementation of the `Rover` member functions.
