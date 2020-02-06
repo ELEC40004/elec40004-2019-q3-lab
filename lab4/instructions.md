@@ -44,10 +44,10 @@ $ ./process_wave "square" "csv"
 $ ./process_wave "[ square 0.5 ]" "csv"
 
 # Square wave with twice the frequency
-$ ./process_wave "[ square 0.5 ]" "csv"
+$ ./process_wave "[ square 2 ]" "csv"
 
 # Square wave with twice the frequency and amplitude of 10
-$ ./process_wave "[ square 0.5 10 ]" "csv"
+$ ./process_wave "[ square 2 10 ]" "csv"
 
 # Sum of two square waves
 $ ./process_wave "[ sum [ square 0.5 10 ] [ square 2 1 ] ]" "csv"
