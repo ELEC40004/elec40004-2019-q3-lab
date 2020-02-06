@@ -9,3 +9,4 @@ instructions in Lab1.
 - [Lab1](lab1) : Plain objects
 - [Lab2](lab2) : Overloading and seperate compilation
 - [Lab3](lab3) : Simple inheritance
+- [Lab4](lab4) : Multiple inheritance
